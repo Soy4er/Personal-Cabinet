@@ -1,0 +1,41 @@
+// Color
+$primary  : #FFBE18;
+$white    : #FFF;
+$black    : #1E1F23;
+$gray-100 : #faf9fa;
+$gray-200 : #F8F9FA;
+$gray-300 : #EDEDED;
+$gray-400 : #C6CBD4;
+$gray-500 : #565C67;
+$gray-600 : #40464B;
+
+// Font Size
+$font-size-base: 1rem !default; // 16px
+$font-size-xs  : $font-size-base * 0.875 !default; // 14px
+$font-size-sm  : $font-size-base * 1.5 !default; // 24px
+$font-size-md  : $font-size-base * 2 !default; // 32px
+$font-size-lg  : $font-size-base * 2.375 !default; // 38px
+$font-size-xl  : $font-size-base * 3.5 !default; // 56px
+
+// Line Height
+$line-height-base: 1.5 !default;
+$line-height-sm  : 1.3 !default;
+$line-height-md  : 1.1 !default;
+
+// Font
+$font-family-base: 'Roboto',
+sans-serif;
+$font-family-add: 'Montserrat',
+sans-serif;
+
+// Breakpoints
+$grid-breakpoints: (xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1920px) !default;
+
+$container-max-widths: (sm: 540px,
+    md: 720px,
+    lg: 960px,
+    xl: 1820px) !default;
