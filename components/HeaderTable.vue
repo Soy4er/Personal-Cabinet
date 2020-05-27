@@ -4,6 +4,7 @@
       <th class="table-header__item">
         <div
           class="item-checkbox"
+          :class="{'item-checkbox--active': selectedRows.length === contacts.length}"
           @click="allSelected()"
         ></div>
       </th>
@@ -20,14 +21,22 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   methods: {
-
+    allSelected() {
+      if (this.selectedRows.length !== this.contacts.length)
+        this.$store.commit("table/selectAllRows", this.contacts);
+      else this.$store.commit("table/unselectAllRows");
+    }
   },
   computed: {
-    columns() {
-      return this.$store.getters['table/allColumns'];
-    }
+    ...mapGetters({
+      columns: 'table/getColumns',
+      contacts: "table/getContacts",
+      selectedRows: 'table/getSelectedRows',
+    }),
   }
 };
 </script>
@@ -37,7 +46,7 @@ export default {
   display: block;
   border-bottom: 1px solid $gray-300;
   &__block {
-    padding: 0 35px;
+    padding: 0 20px;
     display: flex;
     align-items: center;
     min-height: 55px;

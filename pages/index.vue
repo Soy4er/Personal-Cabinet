@@ -18,6 +18,9 @@
 
 <script>
 export default {
+  head: {
+    title: 'Вход в личный кабинет'
+  },
   data () {
     return {
       formError: null,

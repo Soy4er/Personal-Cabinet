@@ -8,9 +8,12 @@
 import TableContacts from '@/components/TableContacts.vue'
 
 export default {
+  head: {
+    title: 'Личный кабинет'
+  },
   middleware: 'auth',
   components: {
-    TableContacts
+    TableContacts,
   },
   async created() {
     this.$store.dispatch("table/startApp");

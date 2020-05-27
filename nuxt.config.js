@@ -29,6 +29,8 @@ module.exports = {
 
   plugins: [
     '@/plugins/vue-localstorage',
+    '@/plugins/vue-fontawesome',
+    '@/plugins/vue-notification',
   ],
 
   /*
@@ -52,7 +54,8 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
-    }
+    },
+    vendor: ['vue-notification']
   },
 
   /*
