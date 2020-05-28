@@ -15,10 +15,11 @@
         :style="{width: `${width}px`}"
       >
         <input
-          type="text"
+          :type="name == 'birthday' ? 'date' : (name == 'email' ? 'email' : 'text')"
           :value="item[name]"
           @input="update(item.id, name, $event.target.value)"
           v-if="edit.id === item.id && edit.status"
+          :placeholder="name.charAt(0).toUpperCase() + name.slice(1)"
         />
         <span v-else>{{item[name]}}</span>
       </th>
@@ -56,7 +57,6 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      edit: { id: 0, status: false },
       showDelete: { id: 0, status: false }
     };
   },
@@ -70,8 +70,9 @@ export default {
     },
     editUpdate(id) {
       const status =
-        this.edit.id === id && this.edit.status === true ? false : true;
-      this.edit = { id, status };
+          this.edit.id === id && this.edit.status === true ? false : true,
+        newEdit = { id, status };
+      this.$store.commit("table/updateEdit", newEdit);
     },
     showDeleteUpdate(id) {
       const status =
@@ -80,25 +81,39 @@ export default {
           : true;
       this.showDelete = { id, status };
     },
-    trashContact(id) {
-      this.$store.commit("table/deleteContact", id);
+    trashContact(contactID) {
+      try {
+        const contactName = this.contacts.find(({ id }) => id === contactID)
+          .name;
+        this.$store.commit("table/deleteContact", contactID);
+        this.$toast.success(
+          `Contact "${contactName}" has been deleted successfully`
+        );
+        this.showDelete.status = false;
+      } catch (e) {
+        this.$toast.error("Oops...Something went wrong");
+      }
     },
     rowSelection(rowID) {
       if (this.selectedRows.indexOf(rowID) < 0)
         this.$store.commit("table/selectRow", rowID);
       else this.$store.commit("table/unselectRow", rowID);
-    },
+    }
   },
   computed: {
     ...mapGetters({
       columns: "table/getColumns",
       contacts: "table/getContacts",
       search: "table/getSearch",
-      selectedRows: "table/getSelectedRows"
+      selectedRows: "table/getSelectedRows",
+      edit: "table/getEdit"
     }),
     contactsSearch() {
       let searchQuery = this.search,
         contacts = this.contacts;
+      contacts = contacts.slice().sort(function(a, b) {
+        return b.created_at - a.created_at;
+      });
       if (searchQuery) {
         searchQuery = searchQuery.toLowerCase().trim();
         return contacts.slice().filter(value => {
@@ -130,7 +145,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .table-body {
   &__block {
     display: flex;
@@ -146,7 +161,7 @@ export default {
     margin-right: 30px;
     text-align: left;
     position: relative;
-    display: block;
+    display: flex;
     align-items: center;
 
     &:last-child {
@@ -159,6 +174,7 @@ export default {
       border: none;
       border-bottom: 1px solid;
       color: #fff;
+      padding-left: 0;
     }
   }
 }

@@ -19,6 +19,7 @@ body {
   padding-left : 100px;
   margin-right : auto;
   margin-left  : auto;
+  position: relative;
 }
 
 .item-checkbox {
@@ -44,22 +45,15 @@ body {
 }
 
 .btn {
-  border       : 1px solid $gray-400;
-  border-radius: 2px;
-  padding      : 0 10px;
-  cursor       : pointer;
-  display      : flex;
-  align-items  : center;
-  user-select  : none;
-  height       : 32px;
-
-  &--arrow-left {
-      transform: rotate(90deg);
-  }
-
-  &--arrow-right {
-      transform: rotate(-90deg);
-  }
+  border          : 1px solid $gray-400;
+  border-radius   : 2px;
+  padding         : 10px 0;
+  cursor          : pointer;
+  text-align      : center;
+  user-select     : none;
+  width           : 100%;
+  background-color: inherit;
+  color           : $white;
 
   &--disabled {
       opacity       : 0.3;
@@ -106,6 +100,21 @@ body {
 
       &-cancel {
           margin-right: 15px;
+          color: $black;
       }
   }
+}
+
+.toasted-container {
+  &.top-right {
+    top: 20px;
+    right: 50px;
+  }
+  & .toasted:first-child {
+    margin-top: 0;
+  }
+}
+
+.mr-20 {
+  margin-right: 20px;
 }

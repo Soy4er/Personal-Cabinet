@@ -7,11 +7,11 @@
 </template>
 
 <style lang="scss" scoped>
-  .breadcrumbs {
+.breadcrumbs {
+  color: $white;
+  & a {
     color: $white;
-    & a {
-      color: $primary;
-      border-bottom: 1px solid $primary;
-    }
+    font-weight: 600;
   }
+}
 </style>

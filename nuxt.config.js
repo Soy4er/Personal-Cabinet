@@ -21,16 +21,23 @@ module.exports = {
     '@nuxtjs/style-resources',
   ],
 
+  modules: [
+    '@nuxtjs/toast',
+  ],
+
   styleResources: {
     scss: [
-      './assets/scss/styles.scss',
+      '@/assets/scss/styles.scss',
     ]
   },
+
+  css: [
+    '@/assets/scss/styles.scss'
+  ],
 
   plugins: [
     '@/plugins/vue-localstorage',
     '@/plugins/vue-fontawesome',
-    '@/plugins/vue-notification',
   ],
 
   /*
@@ -55,7 +62,6 @@ module.exports = {
         })
       }
     },
-    vendor: ['vue-notification']
   },
 
   /*
@@ -70,6 +76,11 @@ module.exports = {
       cookie: { maxAge: 600000 }
     }),
     '~/api'
-  ]
+  ],
+
+  toast: {
+    position: 'top-right',
+    duration: 10000,
+  }
 }
 

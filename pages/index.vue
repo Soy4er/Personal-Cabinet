@@ -1,17 +1,19 @@
 <template>
-  <div class="container">
-    <h1>{{ title }}</h1>
-    <form v-if="!$store.state.authUser" @submit.prevent="login">
-      <p v-if="formError" class="error">{{ formError }}</p>
-      <p><i>To login, use <b>demo</b> as username and <b>demo</b> as password.</i></p>
-      <p>Username: <input v-model="formUsername" type="text" name="username"></p>
-      <p>Password: <input v-model="formPassword" type="password" name="password"></p>
-      <button type="submit">Login</button>
-    </form>
-    <div v-else>
-      <p>You are already logged in! You can return to your personal account or log out.</p>
-      <nuxt-link to="/account/demo">Account</nuxt-link>
-      <button @click="logout">Logout</button>
+  <div class="bg">
+    <div class="authorial">
+      <div class="authorial-header">
+        <h1 class="authorial-header__title">Account Login</h1>
+        <p class="authorial-header__subtitle">{{!this.$store.state.authUser ? 'Log in to take full advantage of the service' : `Hello ${this.$store.state.authUser.username}! You are already authorized and can use all the features of your personal account.`}}</p>
+      </div>
+      <form class="authorial-form" v-if="!$store.state.authUser" @submit.prevent="login">
+        <input v-model="formUsername" type="text" name="username" class="authorial-form__input" placeholder="Username">
+        <input v-model="formPassword" type="password" name="password" class="authorial-form__input" placeholder="Password">
+        <button type="submit" class="authorial-form__submit btn btn--primary">Login</button>
+      </form>
+      <div class="authorial-buttons" v-else>
+        <button class="btn mr-20" @click="logout">Logout</button>
+        <nuxt-link class="btn btn--primary" to="/account/demo">Account</nuxt-link>
+      </div>
     </div>
   </div>
 </template>
@@ -23,10 +25,8 @@ export default {
   },
   data () {
     return {
-      formError: null,
       formUsername: '',
       formPassword: '',
-      title: !this.$store.state.authUser ? 'Please log in to your account' : `Hello ${this.$store.state.authUser.username}!`
     }
   },
   methods: {
@@ -38,25 +38,70 @@ export default {
         })
         this.$router.push({name: 'account-name', params: {name: this.formUsername}})
       } catch (e) {
-        this.formError = e.message
+        this.$toast.success(e.message)
       }
     },
     async logout () {
       try {
         await this.$store.dispatch('logout')
       } catch (e) {
-        this.formError = e.message
+        this.$toast.success(e.message)
       }
     }
   }
 }
 </script>
 
-<style>
-.container {
-  padding: 100px;
+<style lang="scss" scoped>
+.authorial {
+  background-color: $gray-700;
+  box-shadow: 0px 4px 30px rgba(23, 24, 26, 0.85);
+  border-radius: 10px;
+  border: 1px solid $gray-500;
+  width: 500px;
+  padding: 60px 70px;
+  color: $white;
+  text-align: center;
+  &-header {
+    margin-bottom: 30px;
+    &__title {
+      font-size: $font-size-md;
+      font-family: $font-family-add;
+      font-weight: normal;
+    }
+    &__subtitle {
+      font-size: $font-size-base;
+      font-family: $font-family-base;
+      font-weight: normal;
+    }
+  }
+  &-form {
+    &__input {
+      background-color: $black !important;
+      border-radius: 2px;
+      border: none;
+      box-shadow: none;
+      width: 100%;
+      padding: 11px 20px;
+      margin-top: 20px;
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+    &__submit {
+      margin-top: 20px;
+    }
+  }
+  &-buttons {
+    display: flex;
+  }
 }
-.error {
-  color: red;
+.bg {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(0deg, rgba(30, 31, 35, 0.9), rgba(30, 31, 35, 0.9)), url('~assets/images/bg_auth.jpg'), $black;
 }
 </style>

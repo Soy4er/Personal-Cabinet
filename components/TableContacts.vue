@@ -1,35 +1,24 @@
 <template>
-  <div class="container">
-    <breadcrumb />
-    <search-table />
-    <table class="table">
-      <header-table />
-      <body-table />
-      <table-buttons />
-    </table>
-  </div>
+  <table class="table">
+    <table-header />
+    <table-body />
+  </table>
 </template>
 
 
 <script>
-import HeaderTable from "./HeaderTable.vue";
-import SearchTable from "./SearchTable.vue";
-import BodyTable from "./BodyTable.vue";
-import TableButtons from '@/components/TableButtons.vue'
-import Breadcrumb from '@/components/Breadcrumb.vue'
+import TableHeader from "./TableHeader.vue";
+import TableBody from "./TableBody.vue";
 
 export default {
   components: {
-    HeaderTable,
-    SearchTable,
-    BodyTable,
-    TableButtons,
-    Breadcrumb
+    TableHeader,
+    TableBody
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .table {
   width: 100%;
   border-spacing: 0;

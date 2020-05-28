@@ -1,36 +1,61 @@
 <template>
-  <tfootet class="buttons-block">
-    <tr class="buttons-block__item buttons-block__item-create" @click="editUpdate">
+  <div class="buttons-block">
+    <div class="buttons-block__item buttons-block__item-create" @click="createContact">
       <font-awesome-icon :icon="['fas', 'plus']" />Create a new contact
-    </tr>
-    <tr class="buttons-block__item buttons-block__item-delete" @click="deleteContacts">
+    </div>
+    <div
+      class="buttons-block__item buttons-block__item-delete"
+      @click="deleteContacts"
+      v-if="this.selectedRows.length > 0"
+    >
       <font-awesome-icon :icon="['far', 'trash-alt']" />Delete all selected rows
-    </tr>
-  </tfootet>
+    </div>
+  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
   methods: {
+    createContact() {
+      try {
+        const lastID = this.contacts.slice().sort(function(a, b) {
+            return b.id - a.id;
+          })[0].id,
+          newEdit = { id: lastID + 1, status: true };
+        this.$store.commit("table/createContact");
+        this.$store.commit("table/updateEdit", newEdit);
+      } catch (e) {
+        this.$toast.error(e.message);
+      }
+    },
     deleteContacts() {
-      this.$store.commit('table/deleteContacts');
+      try {
+        const countSelectedRows = this.selectedRows.length;
+        this.$store.commit("table/deleteContacts");
+        this.$toast.success(
+          `Successfully delete ${countSelectedRows} contacts`
+        );
+      } catch (e) {
+        this.$toast.error("Oops...Something went wrong");
+      }
     }
   },
   computed: {
     ...mapGetters({
-      edit: 'table/getEdit',
-    }),
-  }
-}
+      contacts: "table/getContacts",
+      selectedRows: "table/getSelectedRows"
+    })
+  },
+};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .buttons-block {
   position: absolute;
-  top: 0;
-  left: 1180px;
+  top: 100px;
+  left: 1260px;
   user-select: none;
   outline: none;
   &__item {

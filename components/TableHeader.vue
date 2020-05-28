@@ -13,15 +13,13 @@
         v-for="item in columns"
         :key="item.name"
         :style="{width: item.width+'px'}"
-      >
-        {{item.label}}
-      </th>
+      >{{item.label}}</th>
     </tr>
   </thead>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
   methods: {
@@ -33,15 +31,15 @@ export default {
   },
   computed: {
     ...mapGetters({
-      columns: 'table/getColumns',
+      columns: "table/getColumns",
       contacts: "table/getContacts",
-      selectedRows: 'table/getSelectedRows',
-    }),
+      selectedRows: "table/getSelectedRows"
+    })
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .table-header {
   display: block;
   border-bottom: 1px solid $gray-300;

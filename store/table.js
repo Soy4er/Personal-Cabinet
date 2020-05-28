@@ -5,7 +5,6 @@ export default {
   actions: {
     async startApp(ctx) {
       const contacts = Vue.localStorage.get('contacts') ? JSON.parse(Vue.localStorage.get('contacts')) : await contact.getContacts()
-
       ctx.commit('updateContacts', contacts);
     },
   },
@@ -20,7 +19,13 @@ export default {
       this.commit('table/updateLS');
     },
 
-    updateContact(state, {contactID, contactProp, contactValue}) {
+    createContact(state) {
+      const date = new Date().getTime(),
+        lastID = state.contacts.slice().sort(function (a, b) { return b.id - a.id })[0].id
+      state.contacts.push({ id: lastID + 1, created_at: date });
+    },
+
+    updateContact(state, { contactID, contactProp, contactValue }) {
       let contact = state.contacts.find(({ id }) => id === contactID)
       contact[contactProp] = contactValue
       this.commit('table/updateLS');
@@ -37,8 +42,6 @@ export default {
     },
 
     deleteContacts(state) {
-      const countSelectedRows = state.selectedRows.length;
-
       // Iterating through an array of all the selected rows, searching for contacts with IDs from the array, and deleting them.
       state.selectedRows.forEach(function (item) {
         const contact = state.contacts.find(({ id }) => id === item),
@@ -46,14 +49,6 @@ export default {
         if (position >= 0) state.contacts.splice(position, 1);
       });
       state.selectedRows = [];
-      
-      Vue.notify({
-        group: 'notification',
-        type: 'success',
-        title: 'Successful deletion',
-        text: `Successfully deleting ${countSelectedRows} items!`,
-        duration: 10000
-      })
     },
 
     selectRow(state, rowID) {
@@ -75,17 +70,22 @@ export default {
     unselectAllRows(state) {
       state.selectedRows = []
     },
+
+    updateEdit(state, newEdit) {
+      state.edit = newEdit
+    }
   },
   state: {
     contacts: [],
     columns: [
-      { id: 0, label: 'Name', name: 'name', width: 250, visible: true },
-      { id: 1, label: 'Phone', name: 'phone', width: 230, visible: true },
+      { id: 0, label: 'Name', name: 'name', width: 240, visible: true },
+      { id: 1, label: 'Phone', name: 'phone', width: 210, visible: true },
       { id: 2, label: 'Email', name: 'email', width: 300, visible: true },
-      { id: 3, label: 'Birthday', name: 'birthday', width: 100, visible: true },
+      { id: 3, label: 'Birthday', name: 'birthday', width: 150, visible: true },
     ],
     search: '',
     selectedRows: [],
+    edit: { id: 0, status: false },
   },
   getters: {
     getContacts(state) {
@@ -99,6 +99,9 @@ export default {
     },
     getSelectedRows(state) {
       return state.selectedRows
+    },
+    getEdit(state) {
+      return state.edit
     }
   }
 }
