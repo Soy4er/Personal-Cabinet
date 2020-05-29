@@ -15,7 +15,7 @@
         :style="{width: `${width}px`}"
       >
         <input
-          :type="name == 'birthday' ? 'date' : (name == 'email' ? 'email' : 'text')"
+          type="text"
           :value="item[name]"
           @input="update(item.id, name, $event.target.value)"
           v-if="edit.id === item.id && edit.status"

@@ -49,6 +49,7 @@ export default {
         if (position >= 0) state.contacts.splice(position, 1);
       });
       state.selectedRows = [];
+      this.commit('table/updateLS');
     },
 
     selectRow(state, rowID) {
@@ -78,10 +79,10 @@ export default {
   state: {
     contacts: [],
     columns: [
-      { id: 0, label: 'Name', name: 'name', width: 240, visible: true },
-      { id: 1, label: 'Phone', name: 'phone', width: 210, visible: true },
+      { id: 0, label: 'Name', name: 'name', width: 250, visible: true },
+      { id: 1, label: 'Phone', name: 'phone', width: 230, visible: true },
       { id: 2, label: 'Email', name: 'email', width: 300, visible: true },
-      { id: 3, label: 'Birthday', name: 'birthday', width: 150, visible: true },
+      { id: 3, label: 'Birthday', name: 'birthday', width: 100, visible: true },
     ],
     search: '',
     selectedRows: [],
