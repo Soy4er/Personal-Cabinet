@@ -3,9 +3,9 @@
     <div class="authorial">
       <div class="authorial-header">
         <h1 class="authorial-header__title">Account Login</h1>
-        <p class="authorial-header__subtitle">{{!this.$store.state.authUser ? 'Log in to take full advantage of the service' : `Hello ${this.$store.state.authUser.username}! You are already authorized and can use all the features of your personal account.`}}</p>
+        <p class="authorial-header__subtitle">{{!authUser ? 'Log in to take full advantage of the service' : `Hello ${this.$store.state.authUser.username}! You are already authorized and can use all the features of your personal account.`}}</p>
       </div>
-      <form class="authorial-form" v-if="!$store.state.authUser" @submit.prevent="login">
+      <form class="authorial-form" v-if="!authUser" @submit.prevent="login">
         <input v-model="formUsername" type="text" name="username" class="authorial-form__input" placeholder="Username">
         <input v-model="formPassword" type="password" name="password" class="authorial-form__input" placeholder="Password">
         <button type="submit" class="authorial-form__submit btn btn--primary">Login</button>
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   head: {
     title: 'Вход в личный кабинет'
@@ -48,7 +50,10 @@ export default {
         this.$toast.success(e.message)
       }
     }
-  }
+  },
+  ...mapGetters({
+    authUser: "index/SET_USER"
+  }),
 }
 </script>
 
