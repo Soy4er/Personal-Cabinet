@@ -3,7 +3,7 @@
     <div class="authorial">
       <div class="authorial-header">
         <h1 class="authorial-header__title">Account Login</h1>
-        <p class="authorial-header__subtitle">{{!authUser ? 'Log in to take full advantage of the service' : `Hello ${this.$store.state.authUser.username}! You are already authorized and can use all the features of your personal account.`}}</p>
+        <p class="authorial-header__subtitle">{{!authUser ? 'Log in to take full advantage of the service' : `Hello ${authUser.username}! You are already authorized and can use all the features of your personal account.`}}</p>
       </div>
       <form class="authorial-form" v-if="!authUser" @submit.prevent="login">
         <input v-model="formUsername" type="text" name="username" class="authorial-form__input" placeholder="Username">
