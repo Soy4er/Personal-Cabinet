@@ -2,6 +2,7 @@ import bodyParser from 'body-parser'
 import session from 'express-session'
 
 module.exports = {
+  mode: 'universal',
   /*
   ** Headers of the page
   */
