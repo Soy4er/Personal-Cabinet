@@ -21,7 +21,7 @@
     "@nuxtjs/style-resources": "^1.0.0",
     "@nuxtjs/toast": "^3.3.0",
     "express-session": "^1.17.1",
-    "nuxt": "^2.0.0",
+    "nuxt": "^2.15.8",
     "nuxt-vuex-localstorage": "^1.2.6",
     "vue-birth-datepicker": "^0.2.8",
     "vue-birthday-input": "^0.8.6",
